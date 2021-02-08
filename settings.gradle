@@ -1,2 +1,3 @@
+include ':myjava'
 include ':app'
 rootProject.name = "javaVm"
