@@ -112,41 +112,38 @@ class SortTest {
     }
 
     //归并排序
-    private static void mergesort(int[] array, int left, int right) {
-        int mid=(left+right)/2;
-        if(left<right)
-        {
-            mergesort(array, left, mid);
-            mergesort(array, mid+1, right);
-            merge(array, left,mid, right);
+    public static int[] mergeSort(int[] arr,int lfindex,int rigindex) {
+        int len = arr.length;
+        if(len <= 1) {
+            return arr;
         }
+        int middle = (lfindex+rigindex)/2;
+        int[] left = Arrays.copyOfRange(arr,0,middle);
+        int[] right = Arrays.copyOfRange(arr,middle+1,rigindex);
+        return merge(mergeSort(left,0,middle), mergeSort(right,middle+1,rigindex));
     }
 
-    private static void merge(int[] array, int l, int mid, int r) {
-        int lindex=l;int rindex=mid+1;
-        int team[]=new int[r-l+1];
-        int teamindex=0;
-        while (lindex<=mid&&rindex<=r) {//先左右比较合并
-            if(array[lindex]<=array[rindex])
-            {
-                team[teamindex++]=array[lindex++];
-            }
-            else {
-                team[teamindex++]=array[rindex++];
-            }
+    public static int[] merge(int [] left,int[] right){
+        int[] temp = new int[]{};
+        int i = 0;
+      while (left.length>0 || right.length>0){
+          int x = 0;
+          int y = 0;
+          if(left[x]<right[x]){
+              temp[i] = left[y];
+              left = Arrays.copyOfRange(left,1,left.length-1);
+          }else{
+              temp[i] = right[y];
+              right = Arrays.copyOfRange(right,1,right.length-1);
+          }
+      }
+      if(left.length == 1){
+          temp[i+1] = left[left.length-1];
+      }
+        if(right.length == 1){
+            temp[i+1] = left[left.length-1];
         }
-        while(lindex<=mid)//当一个越界后剩余按序列添加即可
-        {
-            team[teamindex++]=array[lindex++];
-
-        }
-        while(rindex<=r)
-        {
-            team[teamindex++]=array[rindex++];
-        }
-        for(int i=0;i<teamindex;i++)
-        {
-            array[l+i]=team[i];
-        }
+        return temp;
     }
+
 }
